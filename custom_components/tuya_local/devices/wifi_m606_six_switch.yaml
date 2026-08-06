@@ -1,0 +1,192 @@
+name: Six gang switch
+products:
+  - id: keyn5vwtmxgxfkjf
+    model: M606
+entities:
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "1"
+    dps:
+      - id: 1
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "2"
+    dps:
+      - id: 2
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "3"
+    dps:
+      - id: 3
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "4"
+    dps:
+      - id: 4
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "5"
+    dps:
+      - id: 5
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "6"
+    dps:
+      - id: 6
+        name: switch
+        type: boolean
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "1"
+    dps:
+      - id: 7
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "2"
+    dps:
+      - id: 8
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "3"
+    dps:
+      - id: 9
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "4"
+    dps:
+      - id: 10
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "5"
+    dps:
+      - id: 11
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "6"
+    dps:
+      - id: 12
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: select
+    category: config
+    translation_key: initial_state
+    dps:
+      - id: 14
+        name: option
+        type: string
+        mapping:
+          - dps_val: power_off
+            value: "off"
+          - dps_val: power_on
+            value: "on"
+          - dps_val: last
+            value: memory
+
+  - entity: light
+    translation_key: backlight
+    category: config
+    dps:
+      - id: 16
+        name: switch
+        type: boolean
+
+  # DPs 17/18/19 são blobs base64 de agenda/inching, mesmos formatos
+  # documentados em wifi_m604_quad_switch.yaml (ctrl estende para
+  # sw5 enabled=0x09/disabled=0x08 e sw6 enabled=0x0B/disabled=0x0A).
+  - entity: text
+    name: Cycle schedule
+    category: config
+    hidden: true
+    dps:
+      - id: 17
+        name: value
+        type: base64
+        optional: true
+
+  - entity: text
+    name: Random schedule
+    category: config
+    hidden: true
+    dps:
+      - id: 18
+        name: value
+        type: base64
+        optional: true
+
+  - entity: text
+    name: Inching config
+    category: config
+    hidden: true
+    dps:
+      - id: 19
+        name: value
+        type: base64
+        optional: true
