@@ -9,7 +9,7 @@ from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.exceptions import ConfigEntryNotReady
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tuya_local import (
+from custom_components.tuya_selfhost import (
     async_migrate_entry,
     async_setup_entry,
     async_unload_entry,
@@ -17,7 +17,7 @@ from custom_components.tuya_local import (
     config_flow,
     get_device_unique_id,
 )
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_DEVICE_CID,
     CONF_DEVICE_ID,
     CONF_LOCAL_KEY,
@@ -38,7 +38,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
 
 @pytest.fixture(autouse=True)
 def prevent_task_creation(mocker):
-    mocker.patch("custom_components.tuya_local.device.TuyaLocalDevice.register_entity")
+    mocker.patch("custom_components.tuya_selfhost.device.TuyaLocalDevice.register_entity")
     yield
 
 
@@ -49,7 +49,7 @@ def bypass_discovery(mocker):
     The discovery listener is exercised directly in tests/test_discovery.py.
     """
     mocker.patch(
-        "custom_components.tuya_local.async_start_discovery",
+        "custom_components.tuya_selfhost.async_start_discovery",
         new=AsyncMock(),
     )
     yield
@@ -58,7 +58,7 @@ def bypass_discovery(mocker):
 @pytest.fixture
 def bypass_setup(mocker):
     """Prevent actual setup of the integration after config flow."""
-    mocker.patch("custom_components.tuya_local.async_setup_entry", return_value=True)
+    mocker.patch("custom_components.tuya_selfhost.async_setup_entry", return_value=True)
     yield
 
 
@@ -116,7 +116,7 @@ async def test_async_setup_entry_cleans_up_failed_device(hass, mocker, refresh_e
         return mock_device
 
     mocker.patch(
-        "custom_components.tuya_local.setup_device", side_effect=fake_setup_device
+        "custom_components.tuya_selfhost.setup_device", side_effect=fake_setup_device
     )
 
     entry = MockConfigEntry(
@@ -178,11 +178,11 @@ async def test_async_update_entry_reloads_config_entry(hass, mocker):
         "async_schedule_reload",
     )
     unload_entry = mocker.patch(
-        "custom_components.tuya_local.async_unload_entry",
+        "custom_components.tuya_selfhost.async_unload_entry",
         new=AsyncMock(),
     )
     setup_entry = mocker.patch(
-        "custom_components.tuya_local.async_setup_entry",
+        "custom_components.tuya_selfhost.async_setup_entry",
         new=AsyncMock(),
     )
 
@@ -200,7 +200,7 @@ async def test_migrate_entry(hass, mocker):
     mock_device.async_inferred_type = mocker.AsyncMock(
         return_value="goldair_gpph_heater"
     )
-    mocker.patch("custom_components.tuya_local.setup_device", return_value=mock_device)
+    mocker.patch("custom_components.tuya_selfhost.setup_device", return_value=mock_device)
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -413,7 +413,7 @@ async def test_flow_user_init_protocol_options_are_strings(hass, mocker):
 async def test_async_test_connection_valid(hass, mocker):
     """Test that device is returned when connection is valid."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = True
@@ -440,7 +440,7 @@ async def test_async_test_connection_valid(hass, mocker):
 async def test_async_test_connection_for_subdevice_valid(hass, mocker):
     """Test that subdevice is returned when connection is valid."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = True
@@ -468,7 +468,7 @@ async def test_async_test_connection_for_subdevice_valid(hass, mocker):
 async def test_async_test_connection_invalid(hass, mocker):
     """Test that None is returned when connection is invalid."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = False
@@ -490,7 +490,7 @@ async def test_async_test_connection_invalid(hass, mocker):
 async def test_flow_user_init_invalid_config(hass, mocker):
     """Test errors populated when config is invalid."""
     mocker.patch(
-        "custom_components.tuya_local.config_flow.async_test_connection",
+        "custom_components.tuya_selfhost.config_flow.async_test_connection",
         return_value=None,
     )
     flow = await hass.config_entries.flow.async_init(
@@ -527,7 +527,7 @@ async def test_flow_user_init_data_valid(hass, mocker):
     mock_device._protocol_configured = "auto"
     setup_device_mock(mock_device, mocker)
     mocker.patch(
-        "custom_components.tuya_local.config_flow.async_test_connection",
+        "custom_components.tuya_selfhost.config_flow.async_test_connection",
         return_value=mock_device,
     )
 
@@ -738,7 +738,7 @@ async def test_options_flow_init(hass, bypass_data_fetch):
 async def test_options_flow_modifies_config(hass, bypass_setup, mocker):
     mock_device = mocker.MagicMock()
     mocker.patch(
-        "custom_components.tuya_local.config_flow.async_test_connection",
+        "custom_components.tuya_selfhost.config_flow.async_test_connection",
         return_value=mock_device,
     )
 
@@ -789,7 +789,7 @@ async def test_options_flow_fails_when_connection_fails(
     hass, bypass_data_fetch, mocker
 ):
     mocker.patch(
-        "custom_components.tuya_local.config_flow.async_test_connection",
+        "custom_components.tuya_selfhost.config_flow.async_test_connection",
         return_value=None,
     )
     config_entry = MockConfigEntry(
@@ -830,7 +830,7 @@ async def test_options_flow_fails_when_connection_fails(
 async def test_options_flow_fails_when_config_is_missing(hass, mocker):
     mock_device = mocker.MagicMock()
     mocker.patch(
-        "custom_components.tuya_local.config_flow.async_test_connection",
+        "custom_components.tuya_selfhost.config_flow.async_test_connection",
         return_value=mock_device,
     )
 
@@ -919,7 +919,7 @@ async def test_flow_user_cloud_authenticated_goes_to_choose_device(hass, mocker)
         }
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -936,7 +936,7 @@ async def test_flow_user_cloud_not_authenticated_goes_to_cloud_step(hass, mocker
     mock_cloud = mocker.MagicMock()
     mock_cloud.is_authenticated = False
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -954,7 +954,7 @@ async def test_flow_user_cloud_fresh_login_logs_out_and_goes_to_cloud(hass, mock
     mock_cloud.is_authenticated = False
     mock_cloud.logout = mocker.MagicMock()
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -973,7 +973,7 @@ async def test_flow_user_cloud_exception_goes_to_cloud_step(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(side_effect=Exception("network error"))
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -992,7 +992,7 @@ async def test_flow_user_cloud_exception_goes_to_cloud_step(hass, mocker):
 @pytest.mark.asyncio
 async def test_flow_cloud_shows_form(hass, mocker):
     """Test cloud step shows the user_code form."""
-    mocker.patch("custom_components.tuya_local.config_flow.Cloud")
+    mocker.patch("custom_components.tuya_selfhost.config_flow.Cloud")
     result = await hass.config_entries.flow.async_init(
         DOMAIN, context={"source": "cloud"}
     )
@@ -1006,7 +1006,7 @@ async def test_flow_cloud_success_goes_to_scan(hass, mocker):
     mock_cloud = mocker.MagicMock()
     mock_cloud.async_get_qr_code = AsyncMock(return_value="QR_TOKEN_123")
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(
@@ -1026,7 +1026,7 @@ async def test_flow_cloud_failure_shows_error(hass, mocker):
     mock_cloud.async_get_qr_code = AsyncMock(return_value=False)
     mock_cloud.last_error = {"msg": "Invalid code", "code": 1001}
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(
@@ -1051,7 +1051,7 @@ async def test_flow_scan_shows_qr_form(hass, mocker):
     mock_cloud = mocker.MagicMock()
     mock_cloud.async_get_qr_code = AsyncMock(return_value="QR_TOKEN")
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     # Get to scan via cloud step
@@ -1083,7 +1083,7 @@ async def test_flow_scan_login_success_goes_to_choose_device(hass, mocker):
         }
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(
@@ -1107,7 +1107,7 @@ async def test_flow_scan_login_failure_stays_on_scan(hass, mocker):
     mock_cloud.async_login = AsyncMock(return_value=False)
     mock_cloud.last_error = {"msg": "Auth failed", "code": 2000}
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(
@@ -1171,7 +1171,7 @@ async def test_flow_choose_device_shows_form(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=_make_cloud_devices())
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1189,7 +1189,7 @@ async def test_flow_choose_device_aborts_when_no_devices(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value={})
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1208,7 +1208,7 @@ async def test_flow_choose_device_direct_device_no_hub_goes_to_search(hass, mock
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=devices)
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1230,7 +1230,7 @@ async def test_flow_choose_device_direct_device_with_hub_shows_error(hass, mocke
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=devices)
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1275,7 +1275,7 @@ async def test_flow_choose_device_indirect_device_with_hub_goes_to_search(hass, 
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=devices)
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1307,7 +1307,7 @@ async def test_flow_choose_device_indirect_no_hub_shows_error(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=devices)
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1334,7 +1334,7 @@ async def test_flow_search_shows_form(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=_make_cloud_devices())
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
 
     flow = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
@@ -1355,10 +1355,10 @@ async def test_flow_search_found_device_goes_to_local(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=_make_cloud_devices())
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.scan_for_device",
+        "custom_components.tuya_selfhost.config_flow.scan_for_device",
         return_value={"ip": "192.168.1.50", "version": "3.3", "productKey": "pk123"},
     )
 
@@ -1383,10 +1383,10 @@ async def test_flow_search_not_found_still_goes_to_local(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=_make_cloud_devices())
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.scan_for_device",
+        "custom_components.tuya_selfhost.config_flow.scan_for_device",
         return_value={"ip": None},
     )
 
@@ -1411,10 +1411,10 @@ async def test_flow_search_oserror_still_goes_to_local(hass, mocker):
     mock_cloud.is_authenticated = True
     mock_cloud.async_get_devices = AsyncMock(return_value=_make_cloud_devices())
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.scan_for_device",
+        "custom_components.tuya_selfhost.config_flow.scan_for_device",
         side_effect=OSError("network unreachable"),
     )
 
@@ -1441,7 +1441,7 @@ async def test_flow_search_oserror_still_goes_to_local(hass, mocker):
 async def test_async_test_connection_fixed_protocol_success(hass, mocker):
     """Test connection with a fixed protocol version (not auto)."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = True
@@ -1463,7 +1463,7 @@ async def test_async_test_connection_fixed_protocol_success(hass, mocker):
 async def test_async_test_connection_fixed_protocol_no_state(hass, mocker):
     """Test fixed protocol returns None when device has no state."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = False
@@ -1485,7 +1485,7 @@ async def test_async_test_connection_fixed_protocol_no_state(hass, mocker):
 async def test_async_test_connection_fixed_protocol_exception(hass, mocker):
     """Test fixed protocol returns None on exception."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.async_refresh = AsyncMock(side_effect=Exception("timeout"))
@@ -1507,7 +1507,7 @@ async def test_async_test_connection_fixed_protocol_exception(hass, mocker):
 async def test_async_test_connection_auto_all_protocols_fail(hass, mocker):
     """Test auto mode returns None when all protocols fail."""
     mock_device = mocker.patch(
-        "custom_components.tuya_local.config_flow.TuyaLocalDevice"
+        "custom_components.tuya_selfhost.config_flow.TuyaLocalDevice"
     )
     mock_instance = mocker.AsyncMock()
     mock_instance.has_returned_state = False
@@ -1551,10 +1551,10 @@ async def test_device_name_placeholder_with_cloud_device(hass, mocker):
         }
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.Cloud", return_value=mock_cloud
+        "custom_components.tuya_selfhost.config_flow.Cloud", return_value=mock_cloud
     )
     mocker.patch(
-        "custom_components.tuya_local.config_flow.scan_for_device",
+        "custom_components.tuya_selfhost.config_flow.scan_for_device",
         return_value={"ip": None},
     )
 

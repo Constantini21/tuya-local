@@ -1,4 +1,4 @@
-DOMAIN = "tuya_local"
+DOMAIN = "tuya_selfhost"
 DATA_STORE = "store"
 DATA_DISCOVERY = "discovery"
 

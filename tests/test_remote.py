@@ -8,13 +8,13 @@ from unittest.mock import AsyncMock, MagicMock, Mock, patch
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_DEVICE_ID,
     CONF_PROTOCOL_VERSION,
     CONF_TYPE,
     DOMAIN,
 )
-from custom_components.tuya_local.remote import (
+from custom_components.tuya_selfhost.remote import (
     CMD_SEND,
     CMD_SEND_RF,
     TuyaLocalRemote,
@@ -366,9 +366,9 @@ class TestAsyncLearnCommand:
         remote._storage_loaded = True
         remote._receive_dp.get_value.side_effect = [None, "LEARNED_CODE"]
 
-        with patch("custom_components.tuya_local.remote.persistent_notification"):
+        with patch("custom_components.tuya_selfhost.remote.persistent_notification"):
             with patch(
-                "custom_components.tuya_local.remote.asyncio.sleep",
+                "custom_components.tuya_selfhost.remote.asyncio.sleep",
                 new_callable=AsyncMock,
             ):
                 await remote.async_learn_command(
@@ -384,13 +384,13 @@ class TestAsyncLearnCommand:
         remote._storage_loaded = True
         remote._receive_dp.get_value.return_value = None
 
-        with patch("custom_components.tuya_local.remote.persistent_notification"):
+        with patch("custom_components.tuya_selfhost.remote.persistent_notification"):
             with patch(
-                "custom_components.tuya_local.remote.asyncio.sleep",
+                "custom_components.tuya_selfhost.remote.asyncio.sleep",
                 new_callable=AsyncMock,
             ):
                 with patch(
-                    "custom_components.tuya_local.remote.dt_util.utcnow"
+                    "custom_components.tuya_selfhost.remote.dt_util.utcnow"
                 ) as mock_now:
                     from datetime import datetime, timedelta
 

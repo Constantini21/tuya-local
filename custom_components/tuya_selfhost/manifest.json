@@ -1,22 +1,22 @@
 {
-    "domain": "tuya_local",
+    "domain": "tuya_selfhost",
     "name": "Tuya Selfhost",
     "codeowners": [
         "@make-all"
     ],
     "config_flow": true,
     "dependencies": [],
-    "documentation": "https://github.com/make-all/tuya-local",
+    "documentation": "https://github.com/Constantini21/tuya-selfhost",
     "integration_type": "device",
     "iot_class": "local_push",
-    "issue_tracker": "https://github.com/make-all/tuya-local/issues",
+    "issue_tracker": "https://github.com/Constantini21/tuya-selfhost/issues",
     "loggers": [
-        "tuya_local",
+        "tuya_selfhost",
         "tinytuya"
     ],
     "requirements": [
         "tinytuya==1.20.0",
         "tuya-device-sharing-sdk~=0.2.4"
     ],
-    "version": "2026.7.2.2"
+    "version": "2026.7.3"
 }

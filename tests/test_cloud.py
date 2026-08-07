@@ -4,13 +4,13 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from custom_components.tuya_local.cloud import (
+from custom_components.tuya_selfhost.cloud import (
     HUB_CATEGORIES,
     Cloud,
     DeviceListener,
     TokenListener,
 )
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_ENDPOINT,
     CONF_LOCAL_KEY,
     CONF_TERMINAL_ID,
@@ -73,7 +73,7 @@ class TestLastError:
     @pytest.mark.asyncio
     async def test_set_after_failed_qr(self, cloud):
         with patch(
-            "custom_components.tuya_local.cloud.LoginControl"
+            "custom_components.tuya_selfhost.cloud.LoginControl"
         ) as MockLoginControl:
             mock_lc = MockLoginControl.return_value
             mock_lc.qr_code.return_value = {
@@ -233,7 +233,7 @@ class TestGetDevices:
         mock_device.uuid = "uuid_001"
         mock_device.support_local = True
 
-        with patch("custom_components.tuya_local.cloud.Manager") as MockManager:
+        with patch("custom_components.tuya_selfhost.cloud.Manager") as MockManager:
             mock_manager = MockManager.return_value
             mock_manager.device_map = {"dev_001": mock_device}
             mock_manager.update_device_cache = MagicMock()
@@ -267,7 +267,7 @@ class TestGetDevices:
         mock_device.uuid = "uuid_hub"
         mock_device.support_local = True
 
-        with patch("custom_components.tuya_local.cloud.Manager") as MockManager:
+        with patch("custom_components.tuya_selfhost.cloud.Manager") as MockManager:
             mock_manager = MockManager.return_value
             mock_manager.device_map = {"hub_001": mock_device}
             mock_manager.update_device_cache = MagicMock()
@@ -309,7 +309,7 @@ class TestGetDatamodel:
             }
         }
 
-        with patch("custom_components.tuya_local.cloud.Manager") as MockManager:
+        with patch("custom_components.tuya_selfhost.cloud.Manager") as MockManager:
             mock_manager = MockManager.return_value
             mock_manager.customer_api.get.return_value = mock_response
 

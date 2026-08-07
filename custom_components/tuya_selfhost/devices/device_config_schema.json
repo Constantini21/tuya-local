@@ -1,5 +1,5 @@
 {
-    "$id": "https://github.com/make-all/tuya-local/custom_components/tuya_local/devices/device_config_schema.json",
+    "$id": "https://github.com/Constantini21/tuya-selfhost/custom_components/tuya_selfhost/devices/device_config_schema.json",
     "title": "Tuya Local Device Configuration Schema",
     "description": "Schema for validating Tuya Local device configuration files.",
     "type": "object",

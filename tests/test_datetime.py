@@ -6,13 +6,13 @@ from unittest.mock import AsyncMock, MagicMock, Mock
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_DEVICE_ID,
     CONF_PROTOCOL_VERSION,
     CONF_TYPE,
     DOMAIN,
 )
-from custom_components.tuya_local.datetime import TuyaLocalDateTime, async_setup_entry
+from custom_components.tuya_selfhost.datetime import TuyaLocalDateTime, async_setup_entry
 
 
 @pytest.mark.asyncio

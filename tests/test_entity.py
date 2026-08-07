@@ -10,7 +10,7 @@ from homeassistant.const import (
 )
 from homeassistant.helpers.entity import EntityCategory
 
-from custom_components.tuya_local.entity import (
+from custom_components.tuya_selfhost.entity import (
     BLACKLISTED_ATTRIBUTES,
     TuyaLocalEntity,
     unit_from_ascii,
@@ -42,7 +42,7 @@ def mock_device():
     device.has_returned_state = True
     device.unique_id = "test_device_123"
     device.name = "Test Device"
-    device.device_info = {"identifiers": {("tuya_local", "test_device_123")}}
+    device.device_info = {"identifiers": {("tuya_selfhost", "test_device_123")}}
     device.register_entity = MagicMock()
     device.async_unregister_entity = AsyncMock()
     device.async_refresh = AsyncMock()
@@ -83,7 +83,7 @@ def mock_config():
     config.dps.return_value = [dp1, dp2, dp3]
     config.icon.return_value = None
     config.available.return_value = True
-    config.unique_id.return_value = "tuya_local_test_device_123_test"
+    config.unique_id.return_value = "tuya_selfhost_test_device_123_test"
     config.enabled_by_default.return_value = True
 
     return config
@@ -203,7 +203,7 @@ class TestProperties:
         assert entity.use_device_name is False
 
     def test_unique_id(self, entity):
-        assert entity.unique_id == "tuya_local_test_device_123_test"
+        assert entity.unique_id == "tuya_selfhost_test_device_123_test"
 
     def test_device_info(self, entity, mock_device):
         assert entity.device_info is mock_device.device_info
@@ -286,7 +286,7 @@ class TestAsyncMethods:
     ):
         mock_config.deprecated = True
         mock_config.deprecation_message = "This entity is deprecated"
-        with patch("custom_components.tuya_local.entity._LOGGER") as mock_logger:
+        with patch("custom_components.tuya_selfhost.entity._LOGGER") as mock_logger:
             await entity.async_added_to_hass()
             mock_logger.warning.assert_called_with("This entity is deprecated")
 

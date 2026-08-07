@@ -122,12 +122,12 @@ class TuyaLocalRemote(TuyaLocalEntity, RemoteEntity):
         self._code_storage = Store(
             device._hass,
             CODE_STORAGE_VERSION,
-            f"tuya_local_remote_{device.unique_id}_codes",
+            f"tuya_selfhost_remote_{device.unique_id}_codes",
         )
         self._flag_storage = Store(
             device._hass,
             FLAG_STORAGE_VERSION,
-            f"tuya_local_remote_{device.unique_id}_flags",
+            f"tuya_selfhost_remote_{device.unique_id}_flags",
         )
         self._storage_loaded = False
         self._codes = {}

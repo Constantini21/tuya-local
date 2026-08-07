@@ -14,7 +14,7 @@ from os.path import dirname, exists, join, splitext
 from homeassistant.util import slugify
 from homeassistant.util.yaml import load_yaml
 
-import custom_components.tuya_local.devices as config_dir
+import custom_components.tuya_selfhost.devices as config_dir
 
 _LOGGER = logging.getLogger(__name__)
 

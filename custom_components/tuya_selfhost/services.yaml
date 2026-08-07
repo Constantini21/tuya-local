@@ -2,7 +2,7 @@ send_learned_ir_command:
   target:
     entity:
       domain: remote
-      integration: tuya_local
+      integration: tuya_selfhost
   fields:
     command:
       required: true

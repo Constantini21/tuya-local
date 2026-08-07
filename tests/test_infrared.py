@@ -4,14 +4,14 @@ import pytest
 from infrared_protocols.commands.nec import NECCommand
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_DEVICE_ID,
     CONF_PROTOCOL_VERSION,
     CONF_TYPE,
     DOMAIN,
 )
-from custom_components.tuya_local.helpers.device_config import TuyaEntityConfig
-from custom_components.tuya_local.infrared import TuyaLocalInfrared, async_setup_entry
+from custom_components.tuya_selfhost.helpers.device_config import TuyaEntityConfig
+from custom_components.tuya_selfhost.infrared import TuyaLocalInfrared, async_setup_entry
 
 from .helpers import assert_device_properties_set, mock_device
 

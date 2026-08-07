@@ -6,13 +6,13 @@ import pytest
 from homeassistant.components.cover import CoverDeviceClass, CoverEntityFeature
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.tuya_local.const import (
+from custom_components.tuya_selfhost.const import (
     CONF_DEVICE_ID,
     CONF_PROTOCOL_VERSION,
     CONF_TYPE,
     DOMAIN,
 )
-from custom_components.tuya_local.cover import TuyaLocalCover, async_setup_entry
+from custom_components.tuya_selfhost.cover import TuyaLocalCover, async_setup_entry
 
 
 @pytest.mark.asyncio
@@ -216,7 +216,7 @@ class TestDeviceClass:
     def test_invalid_class_logs_warning(self):
         cover = _make_cover()
         cover._config.device_class = "invalid_class"
-        with patch("custom_components.tuya_local.cover._LOGGER") as mock_logger:
+        with patch("custom_components.tuya_selfhost.cover._LOGGER") as mock_logger:
             result = cover.device_class
             assert result is None
             mock_logger.warning.assert_called_once()
