@@ -76,7 +76,7 @@
             "does_not_need_hub": "El dispositiu no necessita una passarel·la i se n'ha seleccionat una. Reviseu les vostres opcions."
         }
     },
-    "title": "Tuya Local",
+    "title": "Tuya Selfhost",
     "selector": {
         "setup_mode": {
             "options": {

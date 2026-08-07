@@ -1,5 +1,5 @@
 {
-    "title": "Tuya Local",
+    "title": "Tuya Selfhost",
     "config": {
         "step": {
             "user": {
@@ -117,7 +117,7 @@
                 },
                 "command": {
                     "name": "命令",
-                    "description": "要发送的命令。必须是之前由此集成为此遥控器学习的命令。" 
+                    "description": "要发送的命令。必须是之前由此集成为此遥控器学习的命令。"
                 },
                 "device": {
                     "name": "设备",

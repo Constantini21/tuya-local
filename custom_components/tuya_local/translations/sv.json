@@ -1,5 +1,5 @@
 {
-    "title": "Tuya Local",
+    "title": "Tuya Selfhost",
     "config": {
         "step": {
             "user": {
@@ -121,7 +121,7 @@
                 },
                 "device": {
                     "name": "Enhet",
-                    "description": "Den IR-enhet som kommandot ska skickas till. Detta är valfritt och endast nödvändigt om kommandot sparades med en enhet." 
+                    "description": "Den IR-enhet som kommandot ska skickas till. Detta är valfritt och endast nödvändigt om kommandot sparades med en enhet."
                 }
             }
         }

@@ -1,5 +1,5 @@
 {
-    "title": "Tuya Local",
+    "title": "Tuya Selfhost",
     "config": {
         "step": {
             "user": {
@@ -690,7 +690,6 @@
                     "spanish": "Español",
                     "thai": "ภาษาไทย",
                     "turkish": "Türkçe",
-                    "polish": "Polski",
                     "vietnamese": "Tiếng Việt"
                 }
             },
