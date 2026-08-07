@@ -830,6 +830,7 @@ the best option.
 - Logicom Strippy 4 way power strip with USB
 - Loratap RR400W-V2 relay switch
 - Loratap RR620W-JL dual relay switch
+- M602 double wall switch
 - M604 quad wall switch
 - M606 six gang wall switch
 - Makegood double power point (sold under AusElectronicsDirect, Cleverlife, Kogan, Ozsmartthings and other brands)

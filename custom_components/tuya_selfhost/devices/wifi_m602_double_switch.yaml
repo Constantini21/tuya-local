@@ -1,0 +1,120 @@
+# Variante de 2 teclas da família M60x (M604 quad / M606 six).
+# O productKey key5ckdnys3pqgec é compartilhado entre as variantes de
+# 1/2/4 teclas ("Interruptor Inteligente lite"), então o match é por DPs:
+# 1-2 switches, 7-8 timers, 14 estado inicial, 15 modo da luz,
+# 16 backlight, 17-19 blobs de agenda/inching.
+name: Double switch (M602)
+entities:
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "1"
+    dps:
+      - id: 1
+        name: switch
+        type: boolean
+
+  - entity: switch
+    translation_key: switch_x
+    translation_placeholders:
+      x: "2"
+    dps:
+      - id: 2
+        name: switch
+        type: boolean
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "1"
+    dps:
+      - id: 7
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: time
+    category: config
+    translation_key: timer_x
+    translation_placeholders:
+      x: "2"
+    dps:
+      - id: 8
+        type: integer
+        name: second
+        range:
+          min: 0
+          max: 86400
+
+  - entity: select
+    category: config
+    translation_key: initial_state
+    dps:
+      - id: 14
+        name: option
+        type: string
+        mapping:
+          - dps_val: power_off
+            value: "off"
+          - dps_val: power_on
+            value: "on"
+          - dps_val: last
+            value: memory
+
+  - entity: select
+    translation_key: light_mode
+    category: config
+    dps:
+      - id: 15
+        type: string
+        name: option
+        mapping:
+          - dps_val: relay
+            value: state
+          - dps_val: pos
+            value: locator
+          - dps_val: none
+            value: "off"
+
+  - entity: light
+    translation_key: backlight
+    category: config
+    dps:
+      - id: 16
+        name: switch
+        type: boolean
+
+  # DPs 17/18/19: blobs base64 de agenda/inching, formatos documentados
+  # em wifi_m604_quad_switch.yaml.
+  - entity: text
+    name: Cycle schedule
+    category: config
+    hidden: true
+    dps:
+      - id: 17
+        name: value
+        type: base64
+        optional: true
+
+  - entity: text
+    name: Random schedule
+    category: config
+    hidden: true
+    dps:
+      - id: 18
+        name: value
+        type: base64
+        optional: true
+
+  - entity: text
+    name: Inching config
+    category: config
+    hidden: true
+    dps:
+      - id: 19
+        name: value
+        type: base64
+        optional: true
