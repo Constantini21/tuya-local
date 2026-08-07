@@ -1,3 +1,9 @@
+> [!NOTE]
+> **Tuya Selfhost** é um fork mantido por [@Constantini21](https://github.com/Constantini21)
+> de [make-all/tuya-local](https://github.com/make-all/tuya-local), com configs de
+> dispositivos próprios (ex.: interruptor M606 de 6 teclas) e melhorias aplicadas antes
+> de irem para o upstream. Todo crédito da base ao projeto original.
+
 ![logo](custom_components/tuya_local/brand/icon.svg) 
 
 Please report any [issues](https://github.com/make-all/tuya-local/issues) and feel free to raise [pull requests](https://github.com/make-all/tuya-local/pulls).
